@@ -1,17 +1,17 @@
 import requests
 import json
-# import dotenv
-# import os
+from dotenv import load_dotenv
+import os
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-#load_dotenv()
 
+load_dotenv()
 
+ALPHA_VANTAGE_KEY = os.getenv('ALPHA_VANTAGE_KEY')
+TICKER = 'IBM'
 
-TICKER = "IBM"
-
-def saveToJson(ticker):
-    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey=demo'
+def getStockData(ticker):
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHA_VANTAGE_KEY}'
     stockData = requests.get(url).json()
 
     with open(f"{ticker}.json", "w") as json_file:
@@ -43,15 +43,6 @@ def readToDf(filePath):
     
     return df
 
-def normalizeDf(df):
-    scaler = MinMaxScaler()
-
-    columns = df.columns
-    df[columns] = scaler.fit_transform(df[columns])
-    
-    return df
-
-
-# saveToJson(TICKER)
-print(normalizeDf(readToDf("IBM.json")))
+# getStockData(TICKER)
+#print(readToDf("IBM.json"))
 
