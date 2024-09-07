@@ -3,3 +3,6 @@
 __pycache__/model.cpython-311.pyc
 __pycache__/preprocessor.cpython-311.pyc
 __pycache__/stock_info_retriever.cpython-311.pyc
+AAPL.json
+GOOG.json
+MSFT.json

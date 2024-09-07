@@ -8,10 +8,10 @@ from sklearn.preprocessing import MinMaxScaler
 load_dotenv()
 
 ALPHA_VANTAGE_KEY = os.getenv('ALPHA_VANTAGE_KEY')
-TICKER = 'IBM'
+TICKER = 'MSFT'
 
 def getStockData(ticker):
-    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHA_VANTAGE_KEY}'
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={ALPHA_VANTAGE_KEY}'
     stockData = requests.get(url).json()
 
     with open(f"{ticker}.json", "w") as json_file:
@@ -37,12 +37,11 @@ def readToDf(filePath):
             "Volume": int(daily_data["5. volume"])
         }
         data.append(row)    
-    df = pd.DataFrame(data)    
+    df = pd.DataFrame(data) 
     df['Date'] = pd.to_datetime(df['Date'])
     df.set_index('Date', inplace=True)
-    
-    return df
+    return df.sort_values(by='Date', ascending=True)
 
-# getStockData(TICKER)
+#getStockData("AAPL")
 #print(readToDf("IBM.json"))
 
