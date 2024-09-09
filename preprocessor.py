@@ -30,14 +30,14 @@ def splitData(df, trainingPercentage):
 
     return trainDf, testDf
 
-def dfToTensor(df, sequenceLength):
+def dfToTensor(df, sequenceLength, outputWindow):
     features = df.drop(columns=['Close']).values
     target = df['Close'].values
 
     inputs, outputs = [], []
-    for i in range(len(df) - sequenceLength):
+    for i in range(len(df) - sequenceLength - outputWindow + 1):
         inputs.append(features[i:i + sequenceLength])
-        outputs.append(target[i + sequenceLength])
+        outputs.append(target[i + sequenceLength:i + sequenceLength + outputWindow])
 
     return torch.tensor(inputs, dtype=torch.float32), torch.tensor(outputs, dtype=torch.float32)
 
