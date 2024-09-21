@@ -48,7 +48,7 @@ testingDataset = TensorDataset(testX, testY)
 testLoader = DataLoader(dataset=testingDataset, batch_size=BATCH_SIZE)
 
 # Training
-NUM_EPOCHS = 3
+NUM_EPOCHS = 100
 lossOverTime = []
 for epoch in range(NUM_EPOCHS):
     model.train()
